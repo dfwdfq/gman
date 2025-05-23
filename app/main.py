@@ -13,3 +13,4 @@ async def startup():
         await conn.run_sync(Base.metadata.create_all)
 
 
+app.include_router(api_router,prefix="/api")
