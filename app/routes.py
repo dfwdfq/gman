@@ -17,3 +17,9 @@ async def create_new_graph(graph: schemas.GraphCreate, db: AsyncSession = Depend
         print(str(e))
         raise HTTPException(status_code=500, detail={"message": str(e)})
 
+@router.get("/graph/{graph_id}", response_model=schemas.GraphReadResponse)
+async def read_graph(graph_id: int, db: AsyncSession = Depends(get_db)):
+    try:
+        return await util.get_graph(db, graph_id)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail={"message": str(e)})

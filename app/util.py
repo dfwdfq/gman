@@ -1,13 +1,14 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
+from sqlalchemy.orm import joinedload
 from app.models import Graph, Vertex, Edge
 from app.schemas import GraphCreate, GraphCreateResponse, GraphReadResponse
-from typing import List, Dict
+from typing import List, Dict, Any
 from collections import defaultdict
-import logging
+#import logging
 
-logger = logging.getLogger("uvicorn.error")
-logger.setLevel(logging.DEBUG)
+#logger = logging.getLogger("uvicorn.error")
+#logger.setLevel(logging.DEBUG)
 
 async def create_graph(db: AsyncSession, graph_data: GraphCreate):
     #check for cycles before saving
@@ -50,6 +51,28 @@ async def create_graph(db: AsyncSession, graph_data: GraphCreate):
     await db.commit()
     return GraphCreateResponse(id=db_graph.id)
 
+async def get_graph(db: AsyncSession, graph_id: int):
+    query = (
+        select(Graph)
+        .where(Graph.id == graph_id)
+        .options(
+            joinedload(Graph.vertices),
+            joinedload(Graph.edges)
+        )
+    )
+    result = await db.execute(query)
+    graph = result.unique().scalars().first()
+    
+    if not graph:
+        raise ValueError(f"Graph with ID {graph_id} not found")
+    
+    nodes = [{"name": vertex.name} for vertex in graph.vertices]
+    edges = [
+        {"source": edge.source_vertex.name, "target": edge.target_vertex.name}
+        for edge in graph.edges
+    ]
+    
+    return {"id": graph.id, "nodes": nodes, "edges": edges}
 
 
 def __detect_cycle(nodes, edges):
@@ -82,3 +105,4 @@ def __detect_cycle(nodes, edges):
             if dfs(node):
                 return True
     return False
+
