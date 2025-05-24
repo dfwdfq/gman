@@ -105,6 +105,37 @@ def build_adjacency_list(graph_data: Dict[str, Any]) -> Dict[str, List[str]]:
         adj_list.setdefault(src, []).append(tgt)
     return {"adjacency_list": adj_list}
 
+def build_reverse_adjacency_list(graph_data: Dict[str, Any]) -> Dict[str, List[str]]:
+    reversed_adj = {}
+    for edge in graph_data["edges"]:
+        src = edge["source"]
+        tgt = edge["target"]
+        reversed_adj.setdefault(tgt, []).append(src)
+    return {"adjacency_list": reversed_adj}
+
+async def delete_node(db: AsyncSession, graph_id: int, node_name: str):
+    result = await db.execute(
+        select(Graph)
+        .where(Graph.id == graph_id)
+        .options(joinedload(Graph.vertices))
+    )
+    graph = result.scalars().first()
+    
+    if not graph:
+        raise ValueError(f"Graph with ID {graph_id} not found")
+    
+    node = None
+    for vertex in graph.vertices:
+        if vertex.name == node_name:
+            node = vertex
+            break
+    
+    if not node:
+        raise ValueError(f"Node '{node_name}' not found in graph {graph_id}")
+    
+    await db.delete(node)
+    await db.commit()
+
 
 def __detect_cycle(nodes, edges):
     adj = defaultdict(list)
