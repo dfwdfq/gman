@@ -1,4 +1,4 @@
-j# GMAN: Graph Management API for Directed Acyclic Graphs (DAG)
+# GMAN: Graph Management API for Directed Acyclic Graphs (DAG)
 
 **GMAN** is internship project. A FastAPI-based service for managing **DAGs** using PostgreSQL as the DB backend.<br>
 It provides endpoints for creating, reading, and modifying graphs with built-in validation rules:
