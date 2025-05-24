@@ -1,0 +1,163 @@
+{
+  "info": {
+    "name": "Gman",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json "
+  },
+  "item": [
+    {
+      "name": "/api/graph/",
+      "item": [
+        {
+          "name": "Create Graph",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nodes\": [\n    {\n      \"name\": \"A\"\n    },\n    {\n      \"name\": \"B\"\n    }\n  ],\n  \"edges\": [\n    {\n      \"source\": \"A\",\n      \"target\": \"B\"\n    }\n  ]\n}"
+            },
+            "url": "http://localhost:8000/api/graph/"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {\n    pm.response.to.have.status(201);\n});",
+                  "pm.test(\"Response has 'id'\", function () {\n    pm.expect(pm.response.json()).to.have.property('id');\n});",
+                  "pm.test(\"Status code is 400\", function () {\n    pm.response.to.have.status(400);\n});",
+                  "pm.test(\"Error message contains 'Cycle detected'\", function () {\n    pm.expect(pm.response.json().message).to.include(\"Cycle detected\");\n});",
+                  "pm.test(\"Status code is 422\", function () {\n    pm.response.to.have.status(422);\n});",
+                  "pm.test(\"Error message contains 'Latin letters'\", function () {\n    pm.expect(pm.response.json().detail[0].msg).to.include(\"Latin letters\");\n});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "/api/graph/{graph_id}/",
+      "item": [
+        {
+          "name": "Read Graph",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {},
+            "url": "http://localhost:8000/api/graph/{graph_id}//graph_id"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 404\", function () {\n    pm.response.to.have.status(404);\n});",
+                  "pm.test(\"Error message contains 'not found'\", function () {\n    pm.expect(pm.response.json().message).to.include(\"not found\");\n});",
+                  "pm.test(\"Status code is 422\", function () {\n    pm.response.to.have.status(422);\n});",
+                  "pm.test(\"Error message contains 'Latin letters'\", function () {\n    pm.expect(pm.response.json().detail[0].msg).to.include(\"Latin letters\");\n});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "/api/graph/{graph_id}/adjacency_list",
+      "item": [
+        {
+          "name": "Get Adjacency List",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {},
+            "url": "http://localhost:8000/api/graph/{graph_id}/adjacency_list/graph_id"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 404\", function () {\n    pm.response.to.have.status(404);\n});",
+                  "pm.test(\"Error message contains 'not found'\", function () {\n    pm.expect(pm.response.json().message).to.include(\"not found\");\n});",
+                  "pm.test(\"Status code is 422\", function () {\n    pm.response.to.have.status(422);\n});",
+                  "pm.test(\"Error message contains 'Latin letters'\", function () {\n    pm.expect(pm.response.json().detail[0].msg).to.include(\"Latin letters\");\n});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "/api/graph/{graph_id}/reverse_adjacency_list",
+      "item": [
+        {
+          "name": "Get Reverse Adjacency List",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {},
+            "url": "http://localhost:8000/api/graph/{graph_id}/reverse_adjacency_list/graph_id"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 404\", function () {\n    pm.response.to.have.status(404);\n});",
+                  "pm.test(\"Error message contains 'not found'\", function () {\n    pm.expect(pm.response.json().message).to.include(\"not found\");\n});",
+                  "pm.test(\"Status code is 422\", function () {\n    pm.response.to.have.status(422);\n});",
+                  "pm.test(\"Error message contains 'Latin letters'\", function () {\n    pm.expect(pm.response.json().detail[0].msg).to.include(\"Latin letters\");\n});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "/api/graph/{graph_id}/node/{node_name}",
+      "item": [
+        {
+          "name": "Delete Node",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {},
+            "url": "http://localhost:8000/api/graph/{graph_id}/node/{node_name}/graph_id/node_name"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 404\", function () {\n    pm.response.to.have.status(404);\n});",
+                  "pm.test(\"Error message contains 'not found'\", function () {\n    pm.expect(pm.response.json().message).to.include(\"not found\");\n});",
+                  "pm.test(\"Status code is 422\", function () {\n    pm.response.to.have.status(422);\n});",
+                  "pm.test(\"Error message contains 'Latin letters'\", function () {\n    pm.expect(pm.response.json().detail[0].msg).to.include(\"Latin letters\");\n});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
