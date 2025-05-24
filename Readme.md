@@ -44,7 +44,7 @@ chmod +x prepare.bash
 ```bash
 docker-compose up --build
 ```
-
+Note: It can fail for the first, because it need to create DB first.P.S. Docker witchcraft
 ### 4. Access Swagger UI:
 ```
 http://localhost:8000/docs
