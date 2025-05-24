@@ -30,7 +30,7 @@ It provides endpoints for creating, reading, and modifying graphs with built-in 
 
 ### 1. Clone the repository:
 ```bash
-git clone https://github.com/yourname/gman.git
+git clone https://github.com/dfwdfq/gman.git
 cd gman
 ```
 
