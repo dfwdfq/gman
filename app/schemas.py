@@ -12,6 +12,13 @@ class GraphCreate(BaseModel):
     nodes: List[Node]
     edges: List[Edge]
 
+    @model_validator(mode='after')
+    def validate_unique_nodes(self):
+        names = [node.name for node in self.nodes]
+        if len(names) != len(set(names)):
+            raise ValueError("Duplicate node names in graph")
+        return self
+
 class GraphCreateResponse(BaseModel):
     id: int
 
