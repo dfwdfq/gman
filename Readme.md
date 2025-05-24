@@ -9,7 +9,7 @@ It provides endpoints for creating, reading, and modifying graphs with built-in 
 
 ---
 
-##Key Features
+## Key Features
 - **Cycle Detection**: Uses DFS to prevent cyclic graphs during creation.
 - **Adjacency List**: Generates standard and transposed adjacency lists for graph analysis.
 - **Node Deletion**: Automatically removes related edges via cascade rules.
@@ -18,7 +18,7 @@ It provides endpoints for creating, reading, and modifying graphs with built-in 
 
 ---
 
-## 🛠 Requirements
+##  Requirements
 - Python 3.11+
 - PostgreSQL 13+
 - FastAPI, SQLAlchemy, Pydantic, asyncpg
