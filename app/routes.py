@@ -23,3 +23,11 @@ async def read_graph(graph_id: int, db: AsyncSession = Depends(get_db)):
         return await util.get_graph(db, graph_id)
     except ValueError as e:
         raise HTTPException(status_code=404, detail={"message": str(e)})
+
+@router.get("/graph/{graph_id}/adjacency_list", response_model=schemas.AdjacencyListResponse)
+async def get_adjacency_list(graph_id: int, db: AsyncSession = Depends(get_db)):
+    try:
+        graph_data = await util.get_graph_data(db, graph_id);
+        return util.build_adjacency_list(graph_data)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail={"message": str(e)})

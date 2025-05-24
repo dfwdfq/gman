@@ -74,6 +74,37 @@ async def get_graph(db: AsyncSession, graph_id: int):
     
     return {"id": graph.id, "nodes": nodes, "edges": edges}
 
+async def get_graph_data(db: AsyncSession, graph_id: int):
+    result = await db.execute(
+        select(Graph)
+        .where(Graph.id == graph_id)
+        .options(
+            joinedload(Graph.vertices),
+            joinedload(Graph.edges)
+        )
+    )
+    graph = result.unique().scalars().first()
+    
+    if not graph:
+        raise ValueError(f"Graph with ID {graph_id} not found")
+    
+    return {
+        "id": graph.id,
+        "nodes": [{"name": vertex.name} for vertex in graph.vertices],
+        "edges": [
+            {"source": edge.source_vertex.name, "target": edge.target_vertex.name}
+            for edge in graph.edges
+        ]
+    }
+
+def build_adjacency_list(graph_data: Dict[str, Any]) -> Dict[str, List[str]]:
+    adj_list = {}
+    for edge in graph_data["edges"]:
+        src = edge["source"]
+        tgt = edge["target"]
+        adj_list.setdefault(src, []).append(tgt)
+    return {"adjacency_list": adj_list}
+
 
 def __detect_cycle(nodes, edges):
     adj = defaultdict(list)
