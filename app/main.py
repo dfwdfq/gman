@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from app.database import engine
 from app.models import Base
+from app.routes import router as api_router
 
 app = FastAPI(title="Gman", version="0.0.1")
 
