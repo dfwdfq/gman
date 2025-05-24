@@ -1,4 +1,4 @@
-# GMAN: Graph Management API for Directed Acyclic Graphs (DAG)
+j# GMAN: Graph Management API for Directed Acyclic Graphs (DAG)
 
 **GMAN** is internship project. A FastAPI-based service for managing **DAGs** using PostgreSQL as the DB backend.<br>
 It provides endpoints for creating, reading, and modifying graphs with built-in validation rules:
@@ -14,7 +14,7 @@ It provides endpoints for creating, reading, and modifying graphs with built-in 
 - **Adjacency List**: Generates standard and transposed adjacency lists for graph analysis.
 - **Node Deletion**: Automatically removes related edges via cascade rules.
 - **Validation**: Ensures data integrity with Pydantic models and PostgreSQL constraints.
-- **Test Coverage**: >80% via `pytest` and Postman (https://github.com/yourname/gman).
+- **Test Coverage**: Postman
 
 ---
 
