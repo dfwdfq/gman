@@ -36,7 +36,7 @@ cd gman
 
 ### 2. Create `.env` file:
 ```bash
-chmod +x
+chmod +x prepare.bash
 ./prepare.bash
 ```
 
